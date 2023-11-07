@@ -5,6 +5,7 @@ import com.example.rqchallenge.employees.responses.EmployeeApiResponse;
 import com.example.rqchallenge.employees.dtos.EmployeeDto;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 
 @Component
 @Primary
+@Slf4j
 public class EmployeeApiMockClient implements EmployeeApiClient {
 
    @Override
@@ -53,6 +55,7 @@ public class EmployeeApiMockClient implements EmployeeApiClient {
             .lines().collect(Collectors.joining("\n"));
          return new ObjectMapper().readValue(data, typeReference);
       } catch (IOException e) {
+         log.error("Failed to read data from file {}", filePath);
          throw new RuntimeException(e);
       }
    }

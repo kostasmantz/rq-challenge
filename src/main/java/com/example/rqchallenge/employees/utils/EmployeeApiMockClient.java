@@ -2,6 +2,7 @@ package com.example.rqchallenge.employees.utils;
 
 import com.example.rqchallenge.employees.dtos.Employee;
 import com.example.rqchallenge.employees.responses.EmployeeApiResponse;
+import com.example.rqchallenge.employees.dtos.EmployeeResource;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Primary;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
@@ -28,6 +30,18 @@ public class EmployeeApiMockClient implements EmployeeApiClient {
    @Override
    public EmployeeApiResponse<Employee> getById(String id) {
       return getMockData("mockapi/employee_by_id_response.json", new TypeReference<>() {
+      });
+   }
+
+   @Override
+   public EmployeeApiResponse<EmployeeResource> createEmployee(Map<String, Object> employeeData) {
+      return getMockData("mockapi/employee_creation_response.json", new TypeReference<>() {
+      });
+   }
+
+   @Override
+   public EmployeeApiResponse<Void> deleteEmployee(String employeeId) {
+      return getMockData("mockapi/employee_deletion_response.json", new TypeReference<>() {
       });
    }
 

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -59,6 +60,22 @@ public class EmployeeService implements IEmployeeService {
          .limit(10)
          .map(Employee::getEmployeeName)
          .collect(Collectors.toList());
+   }
+
+   @Override
+   public String createEmployee(Map<String, Object> employeeInput) {
+      return Optional.of(employeeApiClient.createEmployee(employeeInput))
+         .filter(EmployeeApiResponse::isSuccessful)
+         .map(EmployeeApiResponse::getStatus)
+         .orElseThrow(() -> new RuntimeException());
+   }
+
+   @Override
+   public String deleteEmployee(String id) {
+      return Optional.of(getEmployeeById(id))
+         .filter(employee -> employeeApiClient.deleteEmployee(id).isSuccessful())
+         .map(Employee::getEmployeeName)
+         .orElseThrow(() -> new RuntimeException());
    }
 
    private List<Employee> getEmployeesMatchingName(String name, List<Employee> employees) {

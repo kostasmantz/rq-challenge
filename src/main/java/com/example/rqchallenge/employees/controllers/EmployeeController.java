@@ -44,12 +44,12 @@ public class EmployeeController implements IEmployeeController{
    }
 
    @Override
-   public ResponseEntity<Employee> createEmployee(Map<String, Object> employeeInput) {
-      return null;
+   public ResponseEntity<String> createEmployee(Map<String, Object> employeeInput) {
+      return ResponseEntity.ok(employeeService.createEmployee(employeeInput));
    }
 
    @Override
    public ResponseEntity<String> deleteEmployeeById(String id) {
-      return null;
+      return ResponseEntity.ok(employeeService.deleteEmployee(id));
    }
 }

@@ -1,5 +1,6 @@
-package com.example.rqchallenge.employees;
+package com.example.rqchallenge.employees.controllers;
 
+import com.example.rqchallenge.employees.dtos.Employee;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -7,7 +8,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-@RestController
 public interface IEmployeeController {
 
     @GetMapping()

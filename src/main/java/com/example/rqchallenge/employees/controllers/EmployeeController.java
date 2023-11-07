@@ -25,7 +25,7 @@ public class EmployeeController implements IEmployeeController{
 
    @Override
    public ResponseEntity<List<Employee>> getEmployeesByNameSearch(String searchString) {
-      return null;
+      return ResponseEntity.ok(employeeService.getEmployeesByName(searchString));
    }
 
    @Override

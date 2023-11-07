@@ -2,7 +2,7 @@ package com.example.rqchallenge.employees.utils;
 
 import com.example.rqchallenge.employees.dtos.Employee;
 import com.example.rqchallenge.employees.responses.EmployeeApiResponse;
-import com.example.rqchallenge.employees.dtos.EmployeeResource;
+import com.example.rqchallenge.employees.dtos.EmployeeDto;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -19,21 +19,21 @@ public class EmployeeApiRestClient implements EmployeeApiClient {
    }
 
    public EmployeeApiResponse<List<Employee>> getEmployees() {
-      return restTemplate.getForObject("https://dummy.restapiexample.com/api/v1/employees", EmployeeApiResponse.class);
+      return restTemplate.getForObject("/employees", EmployeeApiResponse.class);
    }
 
    @Override
    public EmployeeApiResponse<Employee> getById(String id) {
-      return restTemplate.getForObject("https://dummy.restapiexample.com/api/v1/employee/" + id, EmployeeApiResponse.class);
+      return restTemplate.getForObject("/employee/" + id, EmployeeApiResponse.class);
    }
 
    @Override
-   public EmployeeApiResponse<EmployeeResource> createEmployee(Map<String, Object> employeeData) {
-      return restTemplate.postForObject("https://dummy.restapiexample.com/api/v1/create", employeeData, EmployeeApiResponse.class);
+   public EmployeeApiResponse<EmployeeDto> createEmployee(Map<String, Object> employeeData) {
+      return restTemplate.postForObject("/create", employeeData, EmployeeApiResponse.class);
    }
 
    @Override
    public EmployeeApiResponse<Void> deleteEmployee(String employeeId) {
-      return restTemplate.getForObject("https://dummy.restapiexample.com/api/v1/create" + employeeId, EmployeeApiResponse.class);
+      return restTemplate.getForObject("/delete/" + employeeId, EmployeeApiResponse.class);
    }
 }

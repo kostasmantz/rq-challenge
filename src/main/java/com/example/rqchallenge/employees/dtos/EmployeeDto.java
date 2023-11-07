@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Builder
-public class EmployeeResource {
+public class EmployeeDto {
 
    Integer id;
    String name;

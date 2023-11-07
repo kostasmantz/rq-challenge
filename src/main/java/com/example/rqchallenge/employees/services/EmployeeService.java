@@ -25,16 +25,14 @@ public class EmployeeService implements IEmployeeService {
       return Optional.of(employeeApiClient.getEmployees())
          .filter(EmployeeApiResponse::isSuccessful)
          .map(EmployeeApiResponse::getData)
-         .orElseThrow(() -> new RuntimeException(""));
+         .orElseThrow(() -> new RuntimeException("Error encountered while fetching employees"));
    }
 
    @Override
    public List<Employee> getEmployeesByName(String name) {
-      return Optional.of(employeeApiClient.getEmployees())
-         .filter(EmployeeApiResponse::isSuccessful)
-         .map(EmployeeApiResponse::getData)
-         .map(employees -> getEmployeesMatchingName(name, employees))
-         .orElseThrow(() -> new RuntimeException(""));
+      return getAllEmployees().stream()
+         .filter(employee -> employee.getEmployeeName().contains(name))
+         .collect(Collectors.toList());
    }
 
    @Override
@@ -42,7 +40,7 @@ public class EmployeeService implements IEmployeeService {
       return Optional.of(employeeApiClient.getById(id))
          .filter(EmployeeApiResponse::isSuccessful)
          .map(EmployeeApiResponse::getData)
-         .orElseThrow(() -> new RuntimeException(""));
+         .orElseThrow(() -> new RuntimeException("Error encountered while fetching employee with id " + id));
    }
 
    @Override
@@ -50,7 +48,7 @@ public class EmployeeService implements IEmployeeService {
       return getAllEmployees().stream()
          .max(Comparator.comparing(Employee::getEmployeeSalary))
          .map(Employee::getEmployeeSalary)
-         .orElseThrow(() -> new RuntimeException());
+         .orElseThrow(() -> new RuntimeException("Error encountered while getting highest salary amongst employees"));
    }
 
    @Override
@@ -67,7 +65,7 @@ public class EmployeeService implements IEmployeeService {
       return Optional.of(employeeApiClient.createEmployee(employeeInput))
          .filter(EmployeeApiResponse::isSuccessful)
          .map(EmployeeApiResponse::getStatus)
-         .orElseThrow(() -> new RuntimeException());
+         .orElseThrow(() -> new RuntimeException("Error encountered while creating employee"));
    }
 
    @Override
@@ -75,10 +73,7 @@ public class EmployeeService implements IEmployeeService {
       return Optional.of(getEmployeeById(id))
          .filter(employee -> employeeApiClient.deleteEmployee(id).isSuccessful())
          .map(Employee::getEmployeeName)
-         .orElseThrow(() -> new RuntimeException());
+         .orElseThrow(() -> new RuntimeException("Error encountered while deleting employee with id " + id));
    }
 
-   private List<Employee> getEmployeesMatchingName(String name, List<Employee> employees) {
-      return employees.stream().filter(employee -> employee.getEmployeeName().contains(name)).collect(Collectors.toList());
-   }
 }

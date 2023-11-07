@@ -11,4 +11,6 @@ public interface IEmployeeService {
    List<Employee> getEmployeesByName(String name);
 
    Employee getEmployeeById(String id);
+
+   Integer getHighestSalary();
 }

@@ -35,7 +35,7 @@ public class EmployeeController implements IEmployeeController{
 
    @Override
    public ResponseEntity<Integer> getHighestSalaryOfEmployees() {
-      return null;
+      return ResponseEntity.ok(employeeService.getHighestSalary());
    }
 
    @Override

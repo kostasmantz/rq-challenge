@@ -5,6 +5,7 @@ import com.example.rqchallenge.employees.responses.EmployeeApiResponse;
 import com.example.rqchallenge.employees.utils.EmployeeApiClient;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -41,6 +42,14 @@ public class EmployeeService implements IEmployeeService {
          .filter(EmployeeApiResponse::isSuccessful)
          .map(EmployeeApiResponse::getData)
          .orElseThrow(() -> new RuntimeException(""));
+   }
+
+   @Override
+   public Integer getHighestSalary() {
+      return getAllEmployees().stream()
+         .max(Comparator.comparing(Employee::getEmployeeSalary))
+         .map(Employee::getEmployeeSalary)
+         .orElseThrow(() -> new RuntimeException());
    }
 
    private List<Employee> getEmployeesMatchingName(String name, List<Employee> employees) {

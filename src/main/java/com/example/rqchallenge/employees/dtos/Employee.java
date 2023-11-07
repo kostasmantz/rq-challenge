@@ -14,7 +14,7 @@ public class Employee {
    @JsonProperty("employee_name")
    String employeeName;
    @JsonProperty("employee_salary")
-   Long employeeSalary;
+   Integer employeeSalary;
    @JsonProperty("employee_age")
    Integer employeeAge;
    @JsonProperty("profile_image")

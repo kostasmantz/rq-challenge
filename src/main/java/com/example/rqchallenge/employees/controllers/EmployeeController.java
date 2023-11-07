@@ -40,7 +40,7 @@ public class EmployeeController implements IEmployeeController{
 
    @Override
    public ResponseEntity<List<String>> getTopTenHighestEarningEmployeeNames() {
-      return null;
+      return ResponseEntity.ok(employeeService.getHighestEarningEmployees());
    }
 
    @Override

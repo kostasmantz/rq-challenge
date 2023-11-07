@@ -52,6 +52,15 @@ public class EmployeeService implements IEmployeeService {
          .orElseThrow(() -> new RuntimeException());
    }
 
+   @Override
+   public List<String> getHighestEarningEmployees() {
+      return getAllEmployees().stream()
+         .sorted(Comparator.comparing(Employee::getEmployeeSalary).reversed())
+         .limit(10)
+         .map(Employee::getEmployeeName)
+         .collect(Collectors.toList());
+   }
+
    private List<Employee> getEmployeesMatchingName(String name, List<Employee> employees) {
       return employees.stream().filter(employee -> employee.getEmployeeName().contains(name)).collect(Collectors.toList());
    }

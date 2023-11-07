@@ -30,7 +30,7 @@ public class EmployeeController implements IEmployeeController{
 
    @Override
    public ResponseEntity<Employee> getEmployeeById(String id) {
-      return null;
+      return ResponseEntity.ok(employeeService.getEmployeeById(id));
    }
 
    @Override

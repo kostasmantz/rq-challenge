@@ -1,7 +1,7 @@
 package com.example.rqchallenge.employees.services;
 
 import com.example.rqchallenge.employees.dtos.Employee;
-import com.example.rqchallenge.employees.responses.EmployeesResponse;
+import com.example.rqchallenge.employees.responses.EmployeeApiResponse;
 import com.example.rqchallenge.employees.utils.EmployeeApiClient;
 import org.springframework.stereotype.Service;
 
@@ -21,17 +21,25 @@ public class EmployeeService implements IEmployeeService {
    @Override
    public List<Employee> getAllEmployees() {
       return Optional.of(employeeApiClient.getEmployees())
-         .filter(EmployeesResponse::isSuccessful)
-         .map(EmployeesResponse::getData)
+         .filter(EmployeeApiResponse::isSuccessful)
+         .map(EmployeeApiResponse::getData)
          .orElseThrow(() -> new RuntimeException(""));
    }
 
    @Override
    public List<Employee> getEmployeesByName(String name) {
       return Optional.of(employeeApiClient.getEmployees())
-         .filter(EmployeesResponse::isSuccessful)
-         .map(EmployeesResponse::getData)
+         .filter(EmployeeApiResponse::isSuccessful)
+         .map(EmployeeApiResponse::getData)
          .map(employees -> getEmployeesMatchingName(name, employees))
+         .orElseThrow(() -> new RuntimeException(""));
+   }
+
+   @Override
+   public Employee getEmployeeById(String id) {
+      return Optional.of(employeeApiClient.getById(id))
+         .filter(EmployeeApiResponse::isSuccessful)
+         .map(EmployeeApiResponse::getData)
          .orElseThrow(() -> new RuntimeException(""));
    }
 

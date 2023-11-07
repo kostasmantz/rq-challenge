@@ -9,4 +9,6 @@ public interface IEmployeeService {
    List<Employee> getAllEmployees();
 
    List<Employee> getEmployeesByName(String name);
+
+   Employee getEmployeeById(String id);
 }

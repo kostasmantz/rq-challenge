@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService implements IEmployeeService {
@@ -23,5 +24,18 @@ public class EmployeeService implements IEmployeeService {
          .filter(EmployeesResponse::isSuccessful)
          .map(EmployeesResponse::getData)
          .orElseThrow(() -> new RuntimeException(""));
+   }
+
+   @Override
+   public List<Employee> getEmployeesByName(String name) {
+      return Optional.of(employeeApiClient.getEmployees())
+         .filter(EmployeesResponse::isSuccessful)
+         .map(EmployeesResponse::getData)
+         .map(employees -> getEmployeesMatchingName(name, employees))
+         .orElseThrow(() -> new RuntimeException(""));
+   }
+
+   private List<Employee> getEmployeesMatchingName(String name, List<Employee> employees) {
+      return employees.stream().filter(employee -> employee.getEmployeeName().contains(name)).collect(Collectors.toList());
    }
 }
